@@ -44,7 +44,7 @@ def get_pdf(rollno):
     viewstategenerator = soup1.find("input", {"name": "__VIEWSTATEGENERATOR"})["value"]
 
     payload2 = {
-        "ddlSession":"121",
+        "ddlSession":"120",
         "ddlSemester":"1",
         "btnCBCSTabulation":"CBCS Result",
         "ddlDegreename":"0",
@@ -89,8 +89,8 @@ def gen_matrix(page):
         if row[0].isnumeric():
             element = [row[2], row[3], row[4], row[5]]
             matrix.append(element)
+    result_row = list()
+    result_row.append(page[-1][0][19:23])
+    result_row.append(page[-1][0][30:34])
+    matrix.append(result_row)
     return matrix
-
-page = get_pdf("25116111")
-matrix = gen_matrix(page)
-print(matrix)

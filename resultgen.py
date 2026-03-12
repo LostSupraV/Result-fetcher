@@ -7,16 +7,11 @@ def process_result(rollno):
         return None
     else:
         matrix = gen_matrix(pdf)
-        sum=0
-        for row in matrix:
-            prt = int(row[2])*int(row[3])
-            sum+=prt
-        spi = sum/24
-        return spi
+        return matrix[-1][0]
 
-roll_numbers = [str(i) for i in range(25116091, 25116113)]
+roll_numbers = [str(i) for i in range(25116001, 25116113)]
 
-with ThreadPoolExecutor(max_workers=10) as executor:
+with ThreadPoolExecutor(max_workers=20) as executor:
     results = list(executor.map(process_result, roll_numbers))
 
 print(results)

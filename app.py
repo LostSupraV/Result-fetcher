@@ -118,6 +118,9 @@ def get_info(rollno):
     return (rollno, name_tag.text.title(),matrix[-1][0].strip(), matrix[-1][1].strip())
 
 def get_profile(rollno):
+    x = get_pdf(rollno)
+    if not x:
+        return None
     pdf,soup = get_pdf(rollno)
     matrix = gen_matrix(pdf)
     name_tag = soup.find(id="lblSName")

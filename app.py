@@ -9,6 +9,10 @@ urllib3.disable_warnings()
 
 url = "https://mis.nitrr.ac.in/publishedresult.aspx"
 
+def is_decimal(s):
+    pattern = "^\d+\.\d+$"
+    return bool(re.findall(pattern, s)) or s.isnumeric()
+
 def start_session(rollno):
     global url
     session = requests.Session()
@@ -98,8 +102,14 @@ def gen_matrix(page):
             element = [row[2], row[3], row[4], row[5]]
             matrix.append(element)
     result_row = list()
-    result_row.append(page[-1][0][19:23])
-    result_row.append(page[-1][0][30:34])
+    data = page[-1][0].split()
+    if not is_decimal(data[4]):
+        result_row.append("--")
+        result_row.append("--")
+        matrix.append(result_row)
+        return matrix
+    result_row.append(data[4])
+    result_row.append(data[7])
     matrix.append(result_row)
     return matrix
 
